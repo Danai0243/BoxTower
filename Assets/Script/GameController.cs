@@ -12,8 +12,15 @@ public class GameController : MonoBehaviour
 
     public Camerafollow Camerafollow;
     public static int score;
+
+    public Text ScoreSendToUiRestart;
     public Text scoretxt;
     public int moveCount;
+
+    public GameObject GameOver_1;
+    public GameObject GameOver_2;
+
+    public GameObject Ground;
     void Awake()
     {
         if (instance == null)
@@ -46,7 +53,7 @@ public class GameController : MonoBehaviour
 
     public void SpawnNewBox()
     {
-        Debug.Log("ทดสอบ");
+
         Invoke("NextBox", 1f);
     }
 
@@ -58,13 +65,16 @@ public class GameController : MonoBehaviour
     {
         score++;
         scoretxt.text = "" + score;
+        ScoreSendToUiRestart.text = score.ToString();
     }
 
     public void MoveCamera()
     {
         moveCount++;
-        if (moveCount == 3)
+        if (moveCount == 2)
         {
+            GameOver_1.transform.position = new Vector3(-3, -4.61f, 0);
+            GameOver_2.transform.position = new Vector3(3, -4.61f, 0);
             moveCount = 0;
             Camerafollow.targetPos.y += 2f;
         }

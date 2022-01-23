@@ -7,6 +7,8 @@ TagManager:
   - Box
   - Ground
   - GameOver
+  - RestartUi
+  - GameOver_Second
   layers:
   - Default
   - TransparentFX

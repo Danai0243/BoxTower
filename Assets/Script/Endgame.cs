@@ -6,14 +6,10 @@ using UnityEngine.UI;
 
 public class Endgame : MonoBehaviour
 {
-    public Text score;
-    GameObject BtnEndGame;
 
     // Use this for initialization
     void Start()
     {
-        // score.text = GameController.score.ToString();
-        // GameController.score;
 
     }
 
@@ -25,7 +21,7 @@ public class Endgame : MonoBehaviour
     public void RestartGame()
     {
 
-        Box.BtnEndGame.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1;
     }
 }

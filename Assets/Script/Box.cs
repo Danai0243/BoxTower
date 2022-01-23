@@ -15,6 +15,14 @@ public class Box : MonoBehaviour
 
     bool isGameOver;
 
+    bool isGround;
+
+    bool isBox;
+
+    int checkBox;
+
+    public static bool OnOff = false;
+
     public static GameObject BtnEndGame;
 
 
@@ -25,15 +33,31 @@ public class Box : MonoBehaviour
         if (other.gameObject.tag == "Ground")
         {
             ignoreTrigger = true;
+            isGround = true;
             Invoke("OnGround", 1f);
+            checkBox++;
+            if (checkBox > 1)
+            {
+                OnOff = true;
+                Time.timeScale = 0;
+
+            }
+            Debug.Log("Box");
+            Debug.Log(checkBox);
+
+
         }
         if (other.gameObject.tag == "Box")
         {
+            isBox = true;
             ignoreTrigger = true;
             GameController.instance.addScore();
             GameController.instance.MoveCamera();
             Invoke("OnGround", 1f);
         }
+
+
+
 
     }
 
@@ -52,13 +76,18 @@ public class Box : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (ignoreTrigger) return;
+        // if (GameController.score >= 3)
+        // {
+        //     if (ignoreTrigger) return;
+        // }
+        // 
         if (other.gameObject.tag == "GameOver")
         {
             CancelInvoke("OnGround");
             isGameOver = true;
             ignoreTrigger = true;
-            BtnEndGame.SetActive(true);
+            OnOff = true;
+            Time.timeScale = 0;
             // Invoke("RestartGame", 1f);
 
         }
@@ -69,7 +98,8 @@ public class Box : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0f;
-        BtnEndGame = GameObject.Find("EndGame");
+
+
         // BtnEndGame.SetActive(false);
         // BtnEndGame.SetActive(false);
     }
@@ -84,6 +114,7 @@ public class Box : MonoBehaviour
             MoveSpeed *= -1f;
         }
         GameController.instance.currentBox = this;
+        OnOff = false;
     }
 
     void MoveBox()
@@ -108,6 +139,8 @@ public class Box : MonoBehaviour
     void Update()
     {
         MoveBox();
+        // Debug.Log(GameController.score);
+
 
     }
 }
